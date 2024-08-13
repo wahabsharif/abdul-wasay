@@ -24,6 +24,14 @@ body {
   background-attachment: fixed;
 }
 
+.bg-gradient {
+  background: radial-gradient(
+    circle,
+    rgba(13, 76, 78, 1) 22%,
+    rgba(44, 53, 49, 1) 75%
+  );
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

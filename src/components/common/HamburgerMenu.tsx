@@ -1,13 +1,12 @@
 "use client";
 
 import devLogo from "@/assets/logos/wahab-sharif-logo.svg";
-import ShimmerButton from "@/components/magicui/shimmer-button";
 import { navLinks, socialLinks } from "@/data/navData";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { IoMdMail } from "react-icons/io";
+import SendMessage from "./SendMessage";
 
 const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,10 +21,10 @@ const HamburgerMenu = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full h-20 bg-white z-[888] animate-fadeInNav">
+    <nav className="fixed top-0 w-full h-20 bg-white z-40 animate-fadeInNav">
       <div className="w-full max-w-screen-xl mx-auto pt-3.5 flex justify-between items-center px-4">
         <Link
-          href="#"
+          href="/"
           id="logo"
           className="text-brandy text-2xl font-normal no-underline mt-2.5 md:text-3xl"
         >
@@ -33,7 +32,7 @@ const HamburgerMenu = () => {
         </Link>
         <div className="flex items-center">
           <div
-            className="cursor-pointer text-3xl md:text-5xl z-[999]"
+            className="cursor-pointer text-3xl md:text-5xl z-40"
             onClick={toggleMenu}
           >
             {menuOpen ? (
@@ -76,12 +75,9 @@ const HamburgerMenu = () => {
                         Welcome to Abdul Wasay&apos;s site! Explore our
                         services, check out our work, and get in touch.
                       </p>
+
                       <div className="flex items-center justify-center mb-4">
-                        <ShimmerButton className="shadow-2xl text-peachOrange dark:from-white dark:to-slate-900/10 hover:text-hummingBird transition-transform duration-300 ease-in-out hover:scale-110">
-                          <span className="flex items-center whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight lg:text-lg">
-                            <IoMdMail className="mr-2" /> Sent Message
-                          </span>
-                        </ShimmerButton>
+                        <SendMessage />
                       </div>
 
                       <div className="flex space-x-4">
