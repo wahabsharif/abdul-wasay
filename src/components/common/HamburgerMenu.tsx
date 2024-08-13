@@ -1,12 +1,18 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { FiMenu, FiX } from "react-icons/fi";
+
+// Dynamically import components
+const SendMessage = dynamic(() => import("./SendMessage"));
+const TransitionLink = dynamic(() => import("./TransitionLink"));
+
+// Import static assets and data
 import devLogo from "@/assets/logos/wahab-sharif-logo.svg";
 import { navLinks, socialLinks } from "@/data/navData";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
-import SendMessage from "./SendMessage";
 
 const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,17 +37,20 @@ const HamburgerMenu = () => {
           Film By Wasay
         </Link>
         <div className="flex items-center">
-          <div
-            className="cursor-pointer text-3xl md:text-5xl z-40"
+          <button
+            className="text-3xl md:text-5xl z-40"
             onClick={toggleMenu}
+            aria-expanded={menuOpen}
+            aria-controls="menu"
           >
             {menuOpen ? (
               <FiX className="text-brandy transition-transform duration-300 ease-in-out" />
             ) : (
               <FiMenu className="text-brandy transition-transform duration-300 ease-in-out" />
             )}
-          </div>
+          </button>
           <div
+            id="menu"
             className={`fixed inset-0 bg-white bg-opacity-10 backdrop-blur-lg transition-opacity duration-500 ease-in-out flex ${
               menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
@@ -51,7 +60,7 @@ const HamburgerMenu = () => {
                 {/* Nav Links */}
                 <div className="w-full md:w-1/3 flex flex-col justify-center items-start p-4 md:ml-40">
                   {navLinks.map((link, index) => (
-                    <Link
+                    <TransitionLink
                       key={index}
                       href={link.href}
                       onClick={handleLinkClick}
@@ -61,9 +70,10 @@ const HamburgerMenu = () => {
                           : "translate-y-10 opacity-0"
                       }`}
                       style={{ transitionDelay: link.delay }}
+                      label={""}
                     >
                       {link.label}
-                    </Link>
+                    </TransitionLink>
                   ))}
                 </div>
 
