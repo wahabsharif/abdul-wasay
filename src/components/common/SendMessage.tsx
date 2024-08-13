@@ -7,6 +7,15 @@ import { Dialog, Transition } from "@headlessui/react";
 
 function SendMessage() {
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -14,7 +23,43 @@ function SendMessage() {
 
   function closeModal() {
     setIsOpen(false);
+    setMessage("");
   }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/sendMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setMessage("Message sent ✅");
+        setTimeout(() => {
+          closeModal();
+        }, 2000);
+      } else {
+        setMessage(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      setMessage("Error sending message. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -63,7 +108,7 @@ function SendMessage() {
                     Send a Message
                   </Dialog.Title>
 
-                  <form className="mt-4 space-y-4">
+                  <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
                     <div>
                       <label
                         htmlFor="name"
@@ -74,8 +119,11 @@ function SendMessage() {
                       <input
                         type="text"
                         id="name"
+                        value={formData.name}
+                        onChange={handleChange}
                         className="mt-1 p-2 block w-full rounded-md border-gray-700 shadow-sm bg-gray-800 bg-opacity-40 text-gray-200 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="Your Name"
+                        required
                       />
                     </div>
                     <div>
@@ -88,8 +136,11 @@ function SendMessage() {
                       <input
                         type="tel"
                         id="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                         className="mt-1 p-2 block w-full rounded-md border-gray-700 shadow-sm bg-gray-800 bg-opacity-40 text-gray-200 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="Your Phone Number"
+                        required
                       />
                     </div>
                     <div>
@@ -102,8 +153,11 @@ function SendMessage() {
                       <input
                         type="email"
                         id="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="mt-1 p-2 block w-full rounded-md border-gray-700 shadow-sm bg-gray-800 bg-opacity-40 text-gray-200 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="Your Email"
+                        required
                       />
                     </div>
                     <div>
@@ -116,8 +170,11 @@ function SendMessage() {
                       <input
                         type="text"
                         id="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
                         className="mt-1 p-2 block w-full rounded-md border-gray-700 shadow-sm bg-gray-800 bg-opacity-40 text-gray-200 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="Subject"
+                        required
                       />
                     </div>
                     <div>
@@ -129,19 +186,34 @@ function SendMessage() {
                       </label>
                       <textarea
                         id="message"
+                        value={formData.message}
+                        onChange={handleChange}
                         className="mt-1 p-2 block w-full rounded-md border-gray-700 shadow-sm bg-gray-800 bg-opacity-40 text-gray-200 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="Your Message"
                         rows={4}
+                        required
                       />
                     </div>
                     <div className="mt-4 flex justify-center items-center">
                       <ShimmerButton
                         type="submit"
                         className="bg-indigo-600 text-brandy text-center text-xl font-semibold hover:bg-indigo-700 transition-colors duration-200 ease-in-out"
+                        disabled={isLoading}
                       >
-                        Send
+                        {isLoading ? "Sending..." : "Send"}
                       </ShimmerButton>
                     </div>
+                    {message && (
+                      <p
+                        className={`mt-4 text-center text-lg ${
+                          message.startsWith("Message sent")
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        {message}
+                      </p>
+                    )}
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
