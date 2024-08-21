@@ -29,7 +29,7 @@ const HomeBanner = () => {
             social media channels.
           </span>
         </BlurFade>
-        <BlurFade delay={0.25 * 2} inView>
+        <BlurFade delay={0.25 * 2} inView className="my-5">
           <div className="flex space-x-4">
             {socialLinks.map((social, index) => {
               const IconComponent = social.icon;
