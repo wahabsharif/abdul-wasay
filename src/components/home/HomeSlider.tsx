@@ -1,6 +1,8 @@
+import dynamic from "next/dynamic";
 import React from "react";
-import HomeBanner from "./HomeBanner";
-import AboutBanner from "./AboutBanner";
+
+const HomeBanner = dynamic(() => import("./HomeBanner"));
+const AboutBanner = dynamic(() => import("./AboutBanner"));
 
 function HomeSlider() {
   return (
