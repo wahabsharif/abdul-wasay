@@ -1,18 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import devLogo from "@/assets/logos/wahab-sharif-logo.svg";
+import { navLinks, socialLinks } from "@/data/navData";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import Logo from "@/assets/logos/logo.png";
 
 // Dynamically import components
 const SendMessage = dynamic(() => import("./SendMessage"));
 const TransitionLink = dynamic(() => import("./TransitionLink"));
-
-// Import static assets and data
-import devLogo from "@/assets/logos/wahab-sharif-logo.svg";
-import { navLinks, socialLinks } from "@/data/navData";
-import Image from "next/image";
-import Link from "next/link";
 
 const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,10 +30,15 @@ const HamburgerMenu = () => {
       <div className="w-full max-w-screen-xl mx-auto pt-3.5 flex justify-between items-center px-4">
         <Link
           href="/"
-          id="logo"
-          className="text-brandy text-2xl font-normal no-underline mt-2.5 md:text-3xl"
+          // className="text-brandy text-2xl font-normal no-underline mt-2.5 md:text-3xl"
         >
-          Film By Wasay
+          <Image
+            src={Logo}
+            alt="film-by-abdul-wasay-logo"
+            width={1000}
+            height={1000}
+            className="w-20 h-20"
+          />
         </Link>
         <div className="flex items-center">
           <button

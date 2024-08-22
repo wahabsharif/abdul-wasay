@@ -6,31 +6,37 @@ import BlurFade from "@/components/magicui/blur-fade";
 
 const HomeBanner = () => {
   return (
-    <section className="relative flex items-center w-full overflow-hidden p-10">
+    <div className="relative flex flex-col md:flex-row items-center w-full mt-16 overflow-hidden p-4 md:p-2">
       {/* Image */}
       <BlurFade
         delay={0.25}
         inView
-        className="flex-shrink-0 w-1/2 h-full relative"
+        className="flex-shrink-0 w-full md:w-1/2 h-auto relative"
       >
-        <Image src={homeBanner} alt="Banner Image" width={1000} height={1000} />
+        <Image
+          src={homeBanner}
+          alt="Banner Image"
+          layout="responsive"
+          width={1000}
+          height={500}
+        />
       </BlurFade>
 
       {/* Content */}
-      <div className="flex-1 relative z-10 p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left h-full">
+      <div className="flex-1 relative z-10 p-4 md:p-8 flex flex-col justify-center items-center md:items-start text-center md:text-left">
         <BlurFade delay={0.25} inView>
-          <h1 className="text-3xl font-bold text-brandy tracking-tighter sm:text-5xl xl:text-6xl/none">
+          <h1 className="text-2xl font-bold text-brandy tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl">
             Welcome to Our Website
           </h1>
         </BlurFade>
         <BlurFade delay={0.25 * 2} inView>
-          <span className="text-hummingBird text-lg md:text-xl mb-6">
+          <span className="text-hummingBird text-base md:text-lg mb-4 md:mb-6">
             Discover amazing content and stay connected with us through our
             social media channels.
           </span>
         </BlurFade>
-        <BlurFade delay={0.25 * 2} inView className="my-5">
-          <div className="flex space-x-4">
+        <BlurFade delay={0.25 * 2} inView className="my-4 md:my-5">
+          <div className="flex flex-wrap justify-center md:justify-start space-x-4">
             {socialLinks.map((social, index) => {
               const IconComponent = social.icon;
               return (
@@ -48,7 +54,7 @@ const HomeBanner = () => {
           </div>
         </BlurFade>
       </div>
-    </section>
+    </div>
   );
 };
 
